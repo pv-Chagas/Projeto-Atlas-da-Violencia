@@ -2,6 +2,7 @@ package br.uema.atlas.controller;
 
 import br.uema.atlas.model.Cidade;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ import br.uema.atlas.repository.CidadeRepository;
 @RequestMapping({"/cidades"})
 public class CidadeController {
     
+    @Autowired
     private CidadeRepository repository;
     
     

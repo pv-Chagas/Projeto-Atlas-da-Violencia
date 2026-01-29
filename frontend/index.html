@@ -1,0 +1,598 @@
+﻿<!DOCTYPE html>
+<html lang='pt-BR'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Sistema Atlas - Registro de Ocorrências</title>
+    <link rel='stylesheet' href='css/style.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'>
+</head>
+<body>
+    <header class='header'>
+        <div class='header-content'>
+            <div class='logo'>
+                <i class='fas fa-shield-alt'></i>
+                <h1>Sistema Atlas</h1>
+            </div>
+            <div class='user-info'>
+                <i class='fas fa-user-circle'></i>
+                <span>Registro de Ocorrências</span>
+            </div>
+        </div>
+    </header>
+
+    <div class='container'>
+        <aside class='sidebar'>
+            <nav class='nav-menu'>
+                <a href='#' class='nav-item active' data-section='dashboard'>
+                    <i class='fas fa-chart-line'></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href='#' class='nav-item' data-section='registrar-ocorrencia'>
+                    <i class='fas fa-plus-circle'></i>
+                    <span>Registrar Ocorrência</span>
+                </a>
+                <a href='#' class='nav-item' data-section='ocorrencias'>
+                    <i class='fas fa-file-alt'></i>
+                    <span>Ocorrências Registradas</span>
+                </a>
+                <hr style='margin: 1rem 0; border: none; border-top: 1px solid #e0e0e0;'>
+                <a href='#' class='nav-item' data-section='cidades'>
+                    <i class='fas fa-city'></i>
+                    <span>Cidades</span>
+                </a>
+                <a href='#' class='nav-item' data-section='bairros'>
+                    <i class='fas fa-map-marked-alt'></i>
+                    <span>Bairros</span>
+                </a>
+                <a href='#' class='nav-item' data-section='tipos-crime'>
+                    <i class='fas fa-exclamation-triangle'></i>
+                    <span>Tipos de Crime</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="section-header">
+                    <h2>Dashboard</h2>
+                    <p>Visão geral do sistema</p>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-ocorrencias">0</h3>
+                            <p>Ocorrências Registradas</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-city"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-cidades">0</h3>
+                            <p>Cidades</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-bairros">0</h3>
+                            <p>Bairros</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-tipos-crime">0</h3>
+                            <p>Tipos de Crime</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Registrar Ocorrência Section -->
+            <section id="registrar-ocorrencia" class="content-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-plus-circle"></i> Registrar Nova Ocorrência</h2>
+                    <p>Preencha todos os dados da ocorrência, comunicante e endereço</p>
+                </div>
+                
+                <div class="form-container">
+                    <form id="registro-completo-form" onsubmit="return handleRegistroCompleto(event)">
+                        
+                        <!-- Dados da Ocorrência -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-file-alt"></i> Dados da Ocorrência</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reg-data-fato">Data do Fato *</label>
+                                    <input type="date" id="reg-data-fato" name="dataFato" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-hora-fato">Hora do Fato *</label>
+                                    <input type="time" id="reg-hora-fato" name="horaFato" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reg-tipo-crime">Tipo de Crime *</label>
+                                    <select id="reg-tipo-crime" name="tipoCrime" required>
+                                        <option value="">Selecione o tipo de crime</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-tipo-local">Tipo de Local *</label>
+                                    <select id="reg-tipo-local" name="tipoLocal" required>
+                                        <option value="">Selecione</option>
+                                        <option value="Residência">Residência</option>
+                                        <option value="Via Pública">Via Pública</option>
+                                        <option value="Estabelecimento Comercial">Estabelecimento Comercial</option>
+                                        <option value="Escola">Escola</option>
+                                        <option value="Transporte Público">Transporte Público</option>
+                                        <option value="Outro">Outro</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reg-uf-ocorrencia">UF *</label>
+                                    <select id="reg-uf-ocorrencia" name="ufOcorrencia" required>
+                                        <option value="MA">MA</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-cidade-ocorrencia">Cidade *</label>
+                                    <select id="reg-cidade-ocorrencia" name="cidadeOcorrencia" required>
+                                        <option value="">Selecione a cidade</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-bairro-ocorrencia">Bairro *</label>
+                                    <select id="reg-bairro-ocorrencia" name="bairroOcorrencia" required>
+                                        <option value="">Selecione o bairro</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reg-logradouro-ocorrencia">Logradouro</label>
+                                    <input type="text" id="reg-logradouro-ocorrencia" name="logradouroOcorrencia" placeholder="Rua, Avenida...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-numero-ocorrencia">Número</label>
+                                    <input type="text" id="reg-numero-ocorrencia" name="numeroOcorrencia" placeholder="Nº">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-cep-ocorrencia">CEP</label>
+                                    <input type="text" id="reg-cep-ocorrencia" name="cepOcorrencia" maxlength="9" placeholder="00000-000">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="reg-ponto-ref-ocorrencia">Ponto de Referência</label>
+                                <input type="text" id="reg-ponto-ref-ocorrencia" name="pontoReferenciaOcorrencia" placeholder="Ex: Próximo ao mercado...">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="reg-descricao-fato">Descrição do Fato *</label>
+                                <textarea id="reg-descricao-fato" name="descricaoFato" rows="4" required placeholder="Descreva detalhadamente o que aconteceu..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Dados do Comunicante -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-user"></i> Seus Dados (Comunicante)</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reg-nome">Nome Completo *</label>
+                                    <input type="text" id="reg-nome" name="nome" required placeholder="Digite seu nome completo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-envolvimento">Envolvimento *</label>
+                                    <select id="reg-envolvimento" name="envolvimento" required>
+                                        <option value="">Selecione</option>
+                                        <option value="Vítima">Vítima</option>
+                                        <option value="Testemunha">Testemunha</option>
+                                        <option value="Denunciante">Denunciante</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reg-cpf">CPF *</label>
+                                    <input type="text" id="reg-cpf" name="cpf" maxlength="11" required placeholder="Apenas números">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-dtnasc">Data de Nascimento *</label>
+                                    <input type="date" id="reg-dtnasc" name="dtNasc" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-sexo">Sexo *</label>
+                                    <select id="reg-sexo" name="sexo" required>
+                                        <option value="">Selecione</option>
+                                        <option value="M">Masculino</option>
+                                        <option value="F">Feminino</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reg-nome-mae">Nome da Mãe *</label>
+                                    <input type="text" id="reg-nome-mae" name="nomeMae" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-nome-pai">Nome do Pai</label>
+                                    <input type="text" id="reg-nome-pai" name="nomePai">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reg-estado-civil">Estado Civil *</label>
+                                    <select id="reg-estado-civil" name="estadoCivil" required>
+                                        <option value="">Selecione</option>
+                                        <option value="Solteiro">Solteiro(a)</option>
+                                        <option value="Casado">Casado(a)</option>
+                                        <option value="Divorciado">Divorciado(a)</option>
+                                        <option value="Viúvo">Viúvo(a)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-etnia">Etnia *</label>
+                                    <select id="reg-etnia" name="etnia" required>
+                                        <option value="">Selecione</option>
+                                        <option value="Branca">Branca</option>
+                                        <option value="Parda">Parda</option>
+                                        <option value="Preta">Preta</option>
+                                        <option value="Amarela">Amarela</option>
+                                        <option value="Indígena">Indígena</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-nacionalidade">Nacionalidade *</label>
+                                    <input type="text" id="reg-nacionalidade" name="nacionalidade" value="Brasileira" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reg-telefone">Telefone *</label>
+                                    <input type="text" id="reg-telefone" name="telefone" required placeholder="(00) 00000-0000">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-email">E-mail</label>
+                                    <input type="email" id="reg-email" name="email" placeholder="email@exemplo.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-cidade-comunicante">Cidade de Origem *</label>
+                                    <select id="reg-cidade-comunicante" name="cidadeComunicante" required>
+                                        <option value="">Selecione a cidade</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Endereço do Comunicante -->
+                        <div class="form-section">
+                            <h3><i class="fas fa-map-marker-alt"></i> Seu Endereço</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reg-uf-endereco">UF *</label>
+                                    <select id="reg-uf-endereco" name="ufEndereco" required>
+                                        <option value="MA">MA</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-cidade-endereco">Cidade *</label>
+                                    <select id="reg-cidade-endereco" name="cidadeEndereco" required>
+                                        <option value="">Selecione a cidade</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-bairro-endereco">Bairro *</label>
+                                    <select id="reg-bairro-endereco" name="bairroEndereco" required>
+                                        <option value="">Selecione o bairro</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reg-logradouro-endereco">Logradouro *</label>
+                                    <input type="text" id="reg-logradouro-endereco" name="logradouroEndereco" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-numero-endereco">Número *</label>
+                                    <input type="text" id="reg-numero-endereco" name="numeroEndereco" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-cep-endereco">CEP *</label>
+                                    <input type="text" id="reg-cep-endereco" name="cepEndereco" maxlength="9" required placeholder="00000-000">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="reg-complemento-endereco">Complemento</label>
+                                <input type="text" id="reg-complemento-endereco" name="complementoEndereco" placeholder="Apartamento, bloco...">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="reg-ponto-ref-endereco">Ponto de Referência</label>
+                                <input type="text" id="reg-ponto-ref-endereco" name="pontoReferenciaEndereco" placeholder="Ex: Próximo ao posto...">
+                            </div>
+                        </div>
+                        
+                        <div class="form-footer">
+                            <button type="button" class="btn btn-secondary" onclick="limparFormularioRegistro()">
+                                <i class="fas fa-times"></i> Limpar Formulário
+                            </button>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-check"></i> Registrar Ocorrência Completa
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Ocorrências Registradas Section -->
+            <section id="ocorrencias" class="content-section">
+                <div class="section-header">
+                    <h2>Ocorrências Registradas</h2>
+                    <p>Visualize todas as ocorrências cadastradas</p>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Data</th>
+                                <th>Hora</th>
+                                <th>Tipo de Crime</th>
+                                <th>Local</th>
+                                <th>CPF Comunicante</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ocorrencias-table-body">
+                            <tr>
+                                <td colspan="7" class="loading">Carregando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Cidades Section -->
+            <section id="cidades" class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h2>Gerenciar Cidades</h2>
+                        <p>Cadastro de cidades</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('cidade-modal')">
+                        <i class="fas fa-plus"></i> Nova Cidade
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>UF</th>
+                                <th>Área (km²)</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cidades-table-body">
+                            <tr>
+                                <td colspan="5" class="loading">Carregando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Bairros Section -->
+            <section id="bairros" class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h2>Gerenciar Bairros</h2>
+                        <p>Cadastro de bairros</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('bairro-modal')">
+                        <i class="fas fa-plus"></i> Novo Bairro
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Cidade</th>
+                                <th>População</th>
+                                <th>Área (km²)</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bairros-table-body">
+                            <tr>
+                                <td colspan="6" class="loading">Carregando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Tipos de Crime Section -->
+            <section id="tipos-crime" class="content-section">
+                <div class="section-header">
+                    <div>
+                        <h2>Tipos de Crime</h2>
+                        <p>Cadastro de tipos de crime</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('tipo-crime-modal')">
+                        <i class="fas fa-plus"></i> Novo Tipo
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Crime Violento</th>
+                                <th>Descrição</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tipos-crime-table-body">
+                            <tr>
+                                <td colspan="5" class="loading">Carregando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="cidade-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Cadastrar Cidade</h3>
+                <button class="close-btn" onclick="closeModal('cidade-modal')">&times;</button>
+            </div>
+            <form id="cidade-form" onsubmit="return handleSubmit(event, 'cidade')">
+                <input type="hidden" id="cidade-id" name="id">
+                <div class="form-group">
+                    <label for="cidade-nome">Nome *</label>
+                    <input type="text" id="cidade-nome" name="nome" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cidade-uf">UF *</label>
+                        <select id="cidade-uf" name="uf" required>
+                            <option value="">Selecione</option>
+                            <option value="MA">MA</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cidade-area">Área (km²)</label>
+                        <input type="number" id="cidade-area" name="area" step="0.001">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('cidade-modal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="bairro-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Cadastrar Bairro</h3>
+                <button class="close-btn" onclick="closeModal('bairro-modal')">&times;</button>
+            </div>
+            <form id="bairro-form" onsubmit="return handleSubmit(event, 'bairro')">
+                <input type="hidden" id="bairro-id" name="id">
+                <div class="form-group">
+                    <label for="bairro-nome">Nome *</label>
+                    <input type="text" id="bairro-nome" name="nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="bairro-cidade">Cidade *</label>
+                    <select id="bairro-cidade" name="cidade" required>
+                        <option value="">Selecione uma cidade</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bairro-populacao">População</label>
+                        <input type="number" id="bairro-populacao" name="populacao">
+                    </div>
+                    <div class="form-group">
+                        <label for="bairro-area">Área (km²)</label>
+                        <input type="number" id="bairro-area" name="area" step="0.001">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('bairro-modal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="tipo-crime-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Cadastrar Tipo de Crime</h3>
+                <button class="close-btn" onclick="closeModal('tipo-crime-modal')">&times;</button>
+            </div>
+            <form id="tipo-crime-form" onsubmit="return handleSubmit(event, 'tipo-crime')">
+                <input type="hidden" id="tipo-crime-id" name="id">
+                <div class="form-group">
+                    <label for="tipo-crime-nome">Nome *</label>
+                    <input type="text" id="tipo-crime-nome" name="nome" required>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="tipo-crime-violento" name="crimeViolento">
+                        Crime Violento
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="tipo-crime-descricao">Descrição</label>
+                    <textarea id="tipo-crime-descricao" name="descricao" rows="3"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('tipo-crime-modal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src='js/api.js'></script>
+    <script src='js/app.js'></script>
+    <script>
+        // Forçar abertura do date/time picker ao clicar nos campos
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateInputs = document.querySelectorAll('input[type="date"]');
+            const timeInputs = document.querySelectorAll('input[type="time"]');
+            
+            dateInputs.forEach(input => {
+                input.addEventListener('click', function() {
+                    this.showPicker && this.showPicker();
+                });
+            });
+            
+            timeInputs.forEach(input => {
+                input.addEventListener('click', function() {
+                    this.showPicker && this.showPicker();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
