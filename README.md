@@ -52,3 +52,10 @@ spring.datasource.url=jdbc:mysql://localhost:3306/atlas
 spring.datasource.username=root
 spring.datasource.password=12345678
 ```
+
+## 👥 Autores
+
+- Paulo Chagas — Script SQL gerado pelo Mysql Workbench — (Autor principal)
+- Igor Grilo — Documentação do projeto — ([github.com/ibgrilo](https://github.com/ibgrilo))
+- Rayara Vitória — DER segundo o documento de requisitos — ([https://github.com/Rayara21](https://github.com/Rayara21))
+- Maria Tereza — DER segundo o documento de requisitos — Colaborador externo (sem perfil GitHub)
